@@ -9,6 +9,7 @@ const questArea = document.getElementById("question");
 
 let score = 0;
 let count = 0;
+let state = 0;
 
 const questions = [
     {   // 1
@@ -62,24 +63,29 @@ const displayInfo = (count) => {
 
 start.addEventListener("click", () => {
     count = 0;
+    state = 0;
+    score = 0;
     displayInfo(count);
 })
 
-next.addEventListener("click", () => {   
+next.addEventListener("click", () => {  
+    if (state === 0) { alert('You must select something'); return } 
+    state = 0;
     count++
     displayInfo(count);
 })
 
 function checkScore(value) {
     if (!value) { return score }
+    if (state === 1) { alert(`Score: ${score}`); return score }
     if (currentAnswers['correct'] === value) {
         score++
-        alert(`Correct! ${score}`);
+        alert(`Correct! Score: ${score}`);
     }
     else {
-        alert(`Incorrect! ${score}`);
-        console.log('Incorrect!', score)
-    }    
+        alert(`Incorrect! Score: ${score}`);
+    } 
+    state = 1;   
     return score
 }
 
